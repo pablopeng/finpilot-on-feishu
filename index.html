@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="FinPilot on Feishu - 面向个人投资者与中小投顾团队的合规金融投研服务操作系统演示"
+    />
+    <title>FinPilot on Feishu | 金仕达赛题 MVP</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23162f47'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial' font-size='24' font-weight='700' fill='white'%3EFP%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true">FP</div>
+          <div>
+            <div class="brand-name">FinPilot</div>
+            <div class="brand-caption">on Feishu</div>
+          </div>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="workspace">场景工作台</button>
+          <button class="nav-item" data-view="architecture">Agent 架构</button>
+          <button class="nav-item" data-view="ledger">服务留痕</button>
+        </nav>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">当前演示</div>
+          <div class="current-scenario" id="sidebarScenario">C 端稳健型新手</div>
+          <div class="sample-badge">Sample Data</div>
+        </div>
+
+        <div class="sidebar-footer">
+          <p>2026 AI 先锋未来人才大赛</p>
+          <p>金仕达命题 · 东部赛区</p>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">KINGSTAR CHALLENGE MVP</div>
+            <h1 id="pageTitle">场景工作台</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="status-pill neutral">概念原型 v0.1</span>
+            <button class="button secondary compact" id="resetButton">重置演示</button>
+          </div>
+        </header>
+
+        <section class="view active" id="workspaceView">
+          <div class="intro-row">
+            <div>
+              <h2>先建立框架，再生成答案</h2>
+              <p>
+                FinPilot 将客户画像、证据检索、产品解释、合规审批和服务留痕编排为一条可审计工作流。
+              </p>
+            </div>
+            <div class="principle-strip" aria-label="产品原则">
+              <span>Framework first</span>
+              <span>Evidence before conclusion</span>
+              <span>Compliance before delivery</span>
+            </div>
+          </div>
+
+          <div class="scenario-selector" role="group" aria-label="选择演示场景">
+            <button class="scenario-card selected" data-scenario="consumer">
+              <span class="scenario-type">C 端</span>
+              <strong>稳健型新手投资框架</strong>
+              <span>从风险画像开始，生成证据支持的行动清单。</span>
+            </button>
+            <button class="scenario-card" data-scenario="advisor">
+              <span class="scenario-type">B 端</span>
+              <strong>投顾服务与合规审批</strong>
+              <span>生成客户话术，经合规门禁后写回服务记录。</span>
+            </button>
+          </div>
+
+          <div class="workspace-grid">
+            <section class="panel request-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-kicker">REQUEST</span>
+                  <h3 id="requestTitle">客户请求</h3>
+                </div>
+                <span class="status-pill" id="requestStatus">待运行</span>
+              </div>
+
+              <div class="profile-card" id="profileCard"></div>
+
+              <label class="field-label" for="questionInput">本次问题</label>
+              <textarea id="questionInput" rows="4"></textarea>
+
+              <div class="request-actions">
+                <button class="button primary" id="runButton">启动 Agent 编排</button>
+                <button class="button secondary" id="loadExampleButton">恢复示例问题</button>
+              </div>
+
+              <div class="disclaimer-box">
+                本页面使用虚构人物与演示数据，仅用于比赛原型展示，不构成投资建议。
+              </div>
+            </section>
+
+            <section class="panel orchestration-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-kicker">ORCHESTRATION</span>
+                  <h3>七 Agent 执行轨迹</h3>
+                </div>
+                <span class="runtime" id="runtimeText">未启动</span>
+              </div>
+
+              <div class="agent-flow" id="agentFlow"></div>
+
+              <div class="execution-log" id="executionLog" aria-live="polite">
+                <div class="empty-state compact-empty">
+                  启动编排后，这里将展示每个 Agent 的结构化输入、输出和路由结果。
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section class="results-section" id="resultsSection" hidden>
+            <div class="section-heading">
+              <div>
+                <span class="panel-kicker">STRUCTURED OUTPUT</span>
+                <h2>结构化结果</h2>
+              </div>
+              <div class="result-summary" id="resultSummary"></div>
+            </div>
+
+            <div class="result-grid">
+              <article class="result-card" id="frameworkCard"></article>
+              <article class="result-card" id="evidenceCard"></article>
+              <article class="result-card wide" id="draftCard"></article>
+              <article class="result-card compliance-card wide" id="complianceCard"></article>
+            </div>
+
+            <div class="approval-panel" id="approvalPanel" hidden></div>
+          </section>
+        </section>
+
+        <section class="view" id="architectureView">
+          <div class="section-heading standalone-heading">
+            <div>
+              <span class="panel-kicker">TECHNICAL BLUEPRINT</span>
+              <h2>七 Agent 结构化编排</h2>
+              <p>Agent 之间通过共享状态字段协作，不传递无约束的自由对话。</p>
+            </div>
+          </div>
+
+          <section class="architecture-board">
+            <div class="architecture-entry">IM / 表单 / 投顾入口</div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="architecture-node primary-node">
+              <span>01</span>
+              <strong>风险画像 Agent</strong>
+              <small>画像完整性与适当性门禁</small>
+            </div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="router-node">意图与用户分层路由</div>
+            <div class="branch-grid">
+              <div class="branch-column">
+                <div class="branch-label">低风险 / 新手</div>
+                <div class="architecture-node">
+                  <span>02</span>
+                  <strong>投资框架 Agent</strong>
+                  <small>目标 · 期限 · 风险 · 流动性</small>
+                </div>
+              </div>
+              <div class="branch-column">
+                <div class="branch-label">进阶 / 研究型</div>
+                <div class="architecture-node">
+                  <span>05</span>
+                  <strong>观点挑战 Agent</strong>
+                  <small>反方论证 · 脆弱假设 · 观察指标</small>
+                </div>
+              </div>
+            </div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="parallel-grid">
+              <div class="architecture-node">
+                <span>03</span>
+                <strong>证据检索 Agent</strong>
+                <small>来源 · 日期 · 置信度 · 不确定性</small>
+              </div>
+              <div class="parallel-label">并行</div>
+              <div class="architecture-node">
+                <span>04</span>
+                <strong>产品理解 Agent</strong>
+                <small>费用 · 风险 · 期限 · 流动性</small>
+              </div>
+            </div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="architecture-node gate-node">
+              <span>06</span>
+              <strong>合规审查 Agent</strong>
+              <small>禁用表达 · 风险揭示 · 审批等级</small>
+            </div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="human-gate">人工确认 / 飞书审批</div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="architecture-node success-node">
+              <span>07</span>
+              <strong>服务留痕 Agent</strong>
+              <small>最终版本 · 审批记录 · 回访任务 · 看板指标</small>
+            </div>
+            <div class="architecture-arrow" aria-hidden="true">↓</div>
+            <div class="architecture-entry output-entry">多维表格写回 / 任务创建 / 看板更新</div>
+          </section>
+
+          <section class="mapping-section">
+            <div class="section-heading">
+              <div>
+                <span class="panel-kicker">FEISHU MAPPING</span>
+                <h2>从 Demo 到飞书原生落地</h2>
+              </div>
+            </div>
+            <div class="mapping-table-wrap">
+              <table class="mapping-table">
+                <thead>
+                  <tr>
+                    <th>系统能力</th>
+                    <th>飞书组件</th>
+                    <th>Demo 中的体现</th>
+                  </tr>
+                </thead>
+                <tbody id="mappingTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="ledgerView">
+          <div class="section-heading standalone-heading">
+            <div>
+              <span class="panel-kicker">AUDITABLE SERVICE</span>
+              <h2>服务留痕与团队指标</h2>
+              <p>模拟飞书多维表格中的服务记录、审批状态与回访任务。</p>
+            </div>
+          </div>
+
+          <div class="kpi-grid" id="kpiGrid"></div>
+
+          <section class="panel ledger-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-kicker">BASE RECORDS</span>
+                <h3>服务记录表</h3>
+              </div>
+              <span class="status-pill neutral" id="ledgerCount">0 条记录</span>
+            </div>
+            <div class="ledger-table-wrap">
+              <table class="ledger-table">
+                <thead>
+                  <tr>
+                    <th>记录 ID</th>
+                    <th>对象</th>
+                    <th>场景</th>
+                    <th>证据</th>
+                    <th>合规状态</th>
+                    <th>审批</th>
+                    <th>后续任务</th>
+                  </tr>
+                </thead>
+                <tbody id="ledgerTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
