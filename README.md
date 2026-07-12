@@ -6,6 +6,10 @@
 
 > 所有人物、客户、产品与数据均为比赛演示样例。本系统不构成投资建议，也不执行任何交易。
 
+**在线体验：** [https://finpilot.zeabur.app/](https://finpilot.zeabur.app/)
+
+建议依次体验 C 端稳健型新手与 B 端投顾服务两条路径。B 端流程会在高风险表达处暂停，模拟审批通过后才完成服务留痕。
+
 ## Prototype Preview
 
 ### C 端：保守型新手的市场波动陪伴
@@ -78,6 +82,8 @@ python3 -m http.server 8080
 
 ## Deploy to Zeabur
 
+当前公开版本部署于 [finpilot.zeabur.app](https://finpilot.zeabur.app/)。如需重新部署：
+
 1. 在 Zeabur 项目中选择 `Deploy New Service`。
 2. 选择 `GitHub`，授权后选择 `pablopeng/finpilot-on-feishu`。
 3. 保持默认配置并点击部署。
@@ -88,4 +94,3 @@ python3 -m http.server 8080
 ## Competition Scope
 
 当前 MVP 聚焦产品逻辑与飞书编排，暂不接入真实行情、真实客户数据、生产模型密钥或交易执行能力。后续在赛事租户中，可将演示层逐步替换为飞书多维表格、知识库、审批和智能伙伴的真实能力。
-
